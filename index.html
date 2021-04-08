@@ -2,21 +2,43 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Book Library</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Book Library</title>
 </head>
 
 <body>
-    <h1>Book Library</h1>
-    <div class="container">
+  <h1>Book Library</h1>
+
+  <section class="library">
+    <div class="container"></div>
+    <div class="newBtn">+</div>
+  </section>
+  <div class="form hidden">
+    <div class="overlay"> </div>
+    <div class="content">
+      <button class="closeBtn">&times;</button>
+      <h2>Add Book</h2>
+      <div>
+        <input type="text" name="title" placeholder="title" required />
+      </div>
+      <div>
+        <input type="text" name="author" placeholder="author" required />
+      </div>
+      <div class="numOfPagesDiv">
+        <label for="numOfPages">Number of pages</label>
+        <input type="number" min="1" name="numOfPages" />
+      </div>
+      <div class="wasReadDiv">
+        <label for="wasRead">Mark as read</label>
+        <input type="checkbox" name="wasRead" />
+      </div>
+      <button class="addBtn" type="submit">Add book to library</button>
     </div>
-
-
-
-    <script src="app.js"></script>
+  </div>
+  <script src="app.js"></script>
 </body>
 
 </html>
