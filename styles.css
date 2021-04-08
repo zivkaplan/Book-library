@@ -25,7 +25,7 @@ h1 {
   margin: 20px auto;
   width: 80vw;
   display: flex;
-  justify-content: flex-start;
+  justify-content: stretch;
   align-items: stretch;
   flex-wrap: wrap;
 }
@@ -104,7 +104,6 @@ padding: 5px;
 .deleteBtn:hover::before{
     opacity: 1;
 }
-
 
 .newBtn {
   position: fixed;

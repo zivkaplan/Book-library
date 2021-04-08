@@ -6,9 +6,11 @@ const $addBtn = document.querySelector(".form .addBtn");
 
 
 let myLibrary = [];
+let counter = 0;
+
 class Book {
   constructor(title, author, pages = 0, wasRead = false) {
-    this.id = Math.random();
+    this.id = counter++;
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -24,6 +26,20 @@ class Book {
   }
 }
 
+const harryPotter = new Book("Harry Potter", "J. K. Rolling", 587, true);
+addBookToLibrary(harryPotter, myLibrary);
+const toKillAMockingBird = new Book("To Kill a Mocking Bird", "Harper Lee");
+addBookToLibrary(toKillAMockingBird, myLibrary);
+const sherlockHolmes = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle");
+addBookToLibrary(sherlockHolmes, myLibrary);
+const wizardOfOz = new Book("The Wonderful Wizard of Oz", "L. Frank Baum");
+addBookToLibrary(wizardOfOz, myLibrary);
+const aliceInWonderland = new Book("Alice's Adventures in Wonderland", "Lewis Carroll");
+addBookToLibrary(aliceInWonderland, myLibrary);
+const zivKaplanBio = new Book("Ziv Kaplan's Biography", "Nitai Rach");
+addBookToLibrary(zivKaplanBio, myLibrary);
+
+
 function addBookToLibrary(book, library) {
   library.push(book);
 }
@@ -33,6 +49,35 @@ function displayBooks(library) {
   library.forEach((book) => {
     createBookCard(book);
   });
+}
+
+function localStorageCheck() {
+  if (!localStorage.getItem('bookLibrary')) {
+    populateStorage()
+  }
+  myLibrary = JSON.parse(localStorage.getItem('bookLibrary'));
+}
+
+function populateStorage() {
+  localStorage.removeItem('bookLibrary');
+  localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
+  console.log(JSON.parse(localStorage.getItem('bookLibrary')))
+}
+
+function searchBookById(id) {
+  for (let i = 0; i < myLibrary.length; i++) {
+    console.log(myLibrary[i].id, parseFloat(id))
+    if (myLibrary[i].id === parseFloat(id)) {
+      return i;
+    }
+  }
+}
+
+function deleteBook(id) {
+  document.querySelector(`[data-id="${id}"]`).remove()
+  const bookToRemove = searchBookById(id)
+  myLibrary.splice(bookToRemove, 1);
+  console.log(myLibrary, bookToRemove)
 }
 
 function createBookCard(book) {
@@ -74,21 +119,9 @@ function createBookCard(book) {
   $container.appendChild(bookDiv);
 }
 
-const harryPotter = new Book("Harry Potter", "J. K. Rolling", 587, true);
-addBookToLibrary(harryPotter, myLibrary);
-const toKillAMockingBird = new Book("To Kill a Mocking Bird", "Harper Lee");
-addBookToLibrary(toKillAMockingBird, myLibrary);
-const sherlockHolmes = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle");
-addBookToLibrary(sherlockHolmes, myLibrary);
-const wizardOfOz = new Book("The Wonderful Wizard of Oz", "L. Frank Baum");
-addBookToLibrary(wizardOfOz, myLibrary);
-const aliceInWonderland = new Book("Alice's Adventures in Wonderland", "Lewis Carroll");
-addBookToLibrary(aliceInWonderland, myLibrary);
-const zivKaplanBio = new Book("Ziv Kaplan's Biography", "Nitai Rach");
-addBookToLibrary(zivKaplanBio, myLibrary);
-
-
-displayBooks(myLibrary);
+//main
+localStorageCheck();
+displayBooks(myLibrary)
 
 $newFormBtn.addEventListener("click", (e) => {
   $form.classList.remove("hidden");
@@ -107,25 +140,11 @@ $addBtn.addEventListener("click", (e) => {
   $form.classList.add("hidden");
   addBookToLibrary(newBook, myLibrary);
   createBookCard(newBook);
+  populateStorage();
 })
 
 $container.addEventListener("click", (e) => {
-  console.log(e.target.parentNode.dataset.id)
   if (!e.target.closest(".deleteBtn")) return;
-  deleteBook(e.target.parentNode.dataset.id)
+  deleteBook(e.target.parentNode.dataset.id);
+  populateStorage();
 })
-
-function searchBookById(id) {
-  for (let i = 0; i < myLibrary.length; i++) {
-    if (myLibrary[i].id === parseInt(id)) {
-      return i;
-    }
-  }
-}
-
-function deleteBook(id) {
-  document.querySelector(`[data-id="${id}"]`).remove()
-  myLibrary.splice(searchBookById(id), 1);
-  console.log(myLibrary)
-}
-
