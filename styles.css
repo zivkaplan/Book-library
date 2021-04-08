@@ -25,18 +25,14 @@ h1 {
   margin: 20px auto;
   width: 80vw;
   display: flex;
-  justify-content: stretch;
-  align-items: stretch;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 
-
 .bookCard {
-  flex-grow: 1;
   border-radius: 20px;
   padding: 10px 10px 10px 10px;
-  min-width: 20%;
-  max-width: 40%;
+  flex: 0 1 30%;
   min-height: 150px;
   margin: 10px;
   padding: auto;
@@ -106,6 +102,7 @@ padding: 5px;
 }
 
 .newBtn {
+  color: #fff;
   position: fixed;
   text-align: center;
   padding: 15px;
