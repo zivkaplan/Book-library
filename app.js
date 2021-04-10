@@ -4,6 +4,8 @@ const $newFormBtn = document.querySelector(".newBtn");
 const $closeBtn = $form.querySelector(".form .closeBtn");
 const $addBtn = $form.querySelector(".form .addBtn");
 const $clearLocalStorageBtn = document.querySelector(".clearLocalStorageBtn");
+const $signInBtn = document.querySelector(".signInBtn");
+const $signOutBtn = document.querySelector(".signOutBtn");
 const $showAllBtn = document.querySelector(".showAllBtn");
 const $showReadBtn = document.querySelector(".showReadBtn");
 const $showUnreadBtn = document.querySelector(".showUnreadBtn");
@@ -11,11 +13,12 @@ const $clearLocalStorage = document.querySelector(".clearLocalStorage");
 const $clearLocalCancelBtn = $clearLocalStorage.querySelector(".clearLocalStorage .cancel");
 const $clearLocalDeleteBtn = $clearLocalStorage.querySelector(".clearLocalStorage .delete");
 
-let counter = 0;
+let myLibrary = [];
+let userId = null;
 
 class Book {
   constructor(title, author, pages = 0, wasRead = false) {
-    this.id = counter++;
+    this.id = Date.now();
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -31,16 +34,28 @@ class Book {
   }
 }
 
-function localStorageCheck() {
+function StorageCheck() {
+  if (userId) {
+    readUserData();
+    return
+  }
   if (!localStorage.getItem('bookLibrary')) {
+    myLibrary = [];
+    addDefaultBooks(myLibrary);
     populateStorage()
   }
   myLibrary = JSON.parse(localStorage.getItem('bookLibrary'));
 }
 
-function populateStorage() {
-  let myLibrary = [];
-  addDefaultBooks(myLibrary);
+function saveUserData() {
+  if (userId) {
+    firebase.database().ref('users/' + userId).set(myLibrary);
+    return
+  }
+  populateStorage();
+}
+
+function populateStorage(m) {
   localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
 }
 
@@ -72,7 +87,6 @@ function displayBooks(library) {
 
 function searchBookById(id) {
   for (let i = 0; i < myLibrary.length; i++) {
-    console.log(myLibrary[i].id, parseFloat(id))
     if (myLibrary[i].id === parseFloat(id)) {
       return i;
     }
@@ -129,7 +143,7 @@ function resetLibraryDisplay() {
   }
 }
 //main
-localStorageCheck();
+StorageCheck();
 displayBooks(myLibrary)
 
 $newFormBtn.addEventListener("click", (e) => {
@@ -150,7 +164,8 @@ $addBtn.addEventListener("click", (e) => {
 
   addBookToLibrary(newBook, myLibrary);
   createBookCard(newBook);
-  populateStorage();
+  saveUserData();
+
   //clear inputs
   $form.querySelector('input[name="title"]').value = '';
   $form.querySelector('input[name="author"]').value = '';
@@ -161,7 +176,7 @@ $addBtn.addEventListener("click", (e) => {
 $container.addEventListener("click", (e) => {
   if (!e.target.closest(".deleteBtn")) return;
   deleteBook(e.target.parentNode.dataset.id);
-  populateStorage();
+  saveUserData();
 })
 
 $clearLocalStorageBtn.addEventListener("click", (e) => {
@@ -173,10 +188,10 @@ $clearLocalCancelBtn.addEventListener("click", (e) => {
 })
 
 $clearLocalDeleteBtn.addEventListener("click", (e) => {
-  resetLibraryDisplay();
   $clearLocalStorage.classList.add("hidden");
-  localStorage.clear();
-  localStorageCheck();
+  resetLibraryDisplay();
+  window.localStorage.clear();
+  StorageCheck();
   displayBooks(myLibrary);
 })
 
@@ -194,3 +209,61 @@ $showAllBtn.addEventListener("click", (e) => {
   resetLibraryDisplay();
   displayBooks(myLibrary);
 })
+
+$signInBtn.addEventListener("click", () => {
+  googleLogin();
+})
+
+$signOutBtn.addEventListener("click", () => {
+  firebase.auth().signOut();
+  location.reload();
+})
+
+function googleLogin() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth()
+    .signInWithPopup(provider)
+    .then((result) => {
+      /** @type {firebase.auth.OAuthCredential} */
+      var credential = result.credential;
+
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      // ...
+    }).catch((error) => {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+    });
+}
+
+firebase.auth().onAuthStateChanged(function (user) {
+  if (user) {
+    userId = firebase.auth().currentUser.uid;
+    readUserData();
+    var displayName = $signInBtn.innerText = user.displayName;
+    $clearLocalStorageBtn.classList.add('hidden')
+    $signOutBtn.classList.remove('hidden')
+  } else {
+    $signInBtn.innerText = "Sign in";
+    $signOutBtn.classList.add('hidden')
+
+  }
+}, function (error) {
+  console.log(error);
+});
+
+
+function readUserData() { //Reads myLibrary array from firebase
+  dbrefObject = firebase.database().ref('/' + userId + "/Books");
+  dbrefObject.once("value", function (snap) {
+    console.log(snap);
+  })
+};
