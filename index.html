@@ -10,8 +10,28 @@
 </head>
 
 <body>
-  <h1>Book Library</h1>
+  <header>
+    <ul>
+      <li class="logo"><span>Book Library</span></li>
+      <li class="showAllBtn">Show all books</li>
+      <li class="showUnreadBtn">Show unread books</li>
+      <li class="showReadBtn">Show read books</li>
+      <li class="clearLocalStorageBtn">Clear local storage</li>
+      <li><button class="signInBtn"> Sign in </button></li>
+    </ul>
+  </header>
+  <div class="clearLocalStorage hidden">
+    <div class="overlay"> </div>
+    <div class="content">
+      <p>Are you sure you want to delete your locally saved books?</p>
+      <div class="btnDiv">
+        <button class="delete">Delete</button>
+        <button class="cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
 
+  </section>
   <section class="library">
     <div class="container"></div>
     <div class="newBtn">+</div>

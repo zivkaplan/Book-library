@@ -1,11 +1,16 @@
 const $container = document.querySelector(".container");
 const $form = document.querySelector(".form");
 const $newFormBtn = document.querySelector(".newBtn");
-const $closeBtn = document.querySelector(".form .closeBtn");
-const $addBtn = document.querySelector(".form .addBtn");
+const $closeBtn = $form.querySelector(".form .closeBtn");
+const $addBtn = $form.querySelector(".form .addBtn");
+const $clearLocalStorageBtn = document.querySelector(".clearLocalStorageBtn");
+const $showAllBtn = document.querySelector(".showAllBtn");
+const $showReadBtn = document.querySelector(".showReadBtn");
+const $showUnreadBtn = document.querySelector(".showUnreadBtn");
+const $clearLocalStorage = document.querySelector(".clearLocalStorage");
+const $clearLocalCancelBtn = $clearLocalStorage.querySelector(".clearLocalStorage .cancel");
+const $clearLocalDeleteBtn = $clearLocalStorage.querySelector(".clearLocalStorage .delete");
 
-
-let myLibrary = [];
 let counter = 0;
 
 class Book {
@@ -26,19 +31,33 @@ class Book {
   }
 }
 
-const harryPotter = new Book("Harry Potter", "J. K. Rolling", 587, true);
-addBookToLibrary(harryPotter, myLibrary);
-const toKillAMockingBird = new Book("To Kill a Mocking Bird", "Harper Lee");
-addBookToLibrary(toKillAMockingBird, myLibrary);
-const sherlockHolmes = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle");
-addBookToLibrary(sherlockHolmes, myLibrary);
-const wizardOfOz = new Book("The Wonderful Wizard of Oz", "L. Frank Baum");
-addBookToLibrary(wizardOfOz, myLibrary);
-const aliceInWonderland = new Book("Alice's Adventures in Wonderland", "Lewis Carroll");
-addBookToLibrary(aliceInWonderland, myLibrary);
-const zivKaplanBio = new Book("Ziv Kaplan's Biography", "Nitai Rach");
-addBookToLibrary(zivKaplanBio, myLibrary);
+function localStorageCheck() {
+  if (!localStorage.getItem('bookLibrary')) {
+    populateStorage()
+  }
+  myLibrary = JSON.parse(localStorage.getItem('bookLibrary'));
+}
 
+function populateStorage() {
+  let myLibrary = [];
+  addDefaultBooks(myLibrary);
+  localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
+}
+
+function addDefaultBooks(myLibrary) {
+  const harryPotter = new Book("Harry Potter", "J. K. Rolling", 587, true);
+  addBookToLibrary(harryPotter, myLibrary);
+  const toKillAMockingBird = new Book("To Kill a Mocking Bird", "Harper Lee");
+  addBookToLibrary(toKillAMockingBird, myLibrary);
+  const sherlockHolmes = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle");
+  addBookToLibrary(sherlockHolmes, myLibrary);
+  const wizardOfOz = new Book("The Wonderful Wizard of Oz", "L. Frank Baum");
+  addBookToLibrary(wizardOfOz, myLibrary);
+  const aliceInWonderland = new Book("Alice's Adventures in Wonderland", "Lewis Carroll");
+  addBookToLibrary(aliceInWonderland, myLibrary);
+  const zivKaplanBio = new Book("Ziv Kaplan's Biography", "Nitai Rach");
+  addBookToLibrary(zivKaplanBio, myLibrary);
+}
 
 function addBookToLibrary(book, library) {
   library.push(book);
@@ -49,19 +68,6 @@ function displayBooks(library) {
   library.forEach((book) => {
     createBookCard(book);
   });
-}
-
-function localStorageCheck() {
-  if (!localStorage.getItem('bookLibrary')) {
-    populateStorage()
-  }
-  myLibrary = JSON.parse(localStorage.getItem('bookLibrary'));
-}
-
-function populateStorage() {
-  localStorage.removeItem('bookLibrary');
-  localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
-  console.log(JSON.parse(localStorage.getItem('bookLibrary')))
 }
 
 function searchBookById(id) {
@@ -77,7 +83,6 @@ function deleteBook(id) {
   document.querySelector(`[data-id="${id}"]`).remove()
   const bookToRemove = searchBookById(id)
   myLibrary.splice(bookToRemove, 1);
-  console.log(myLibrary, bookToRemove)
 }
 
 function createBookCard(book) {
@@ -118,7 +123,11 @@ function createBookCard(book) {
   bookDiv.appendChild(wasReadDiv);
   $container.appendChild(bookDiv);
 }
-
+function resetLibraryDisplay() {
+  while ($container.firstChild) {
+    $container.removeChild($container.lastChild);
+  }
+}
 //main
 localStorageCheck();
 displayBooks(myLibrary)
@@ -138,13 +147,50 @@ $addBtn.addEventListener("click", (e) => {
   const wasRead = $form.querySelector('input[name="wasRead"]').checked;
   const newBook = new Book(title, author, pages, wasRead);
   $form.classList.add("hidden");
+
   addBookToLibrary(newBook, myLibrary);
   createBookCard(newBook);
   populateStorage();
+  //clear inputs
+  $form.querySelector('input[name="title"]').value = '';
+  $form.querySelector('input[name="author"]').value = '';
+  $form.querySelector('input[name="numOfPages"]').value = '';
+  $form.querySelector('input[name="wasRead"]').checked = false;
 })
 
 $container.addEventListener("click", (e) => {
   if (!e.target.closest(".deleteBtn")) return;
   deleteBook(e.target.parentNode.dataset.id);
   populateStorage();
+})
+
+$clearLocalStorageBtn.addEventListener("click", (e) => {
+  $clearLocalStorage.classList.remove("hidden");
+})
+
+$clearLocalCancelBtn.addEventListener("click", (e) => {
+  $clearLocalStorage.classList.add("hidden");
+})
+
+$clearLocalDeleteBtn.addEventListener("click", (e) => {
+  resetLibraryDisplay();
+  $clearLocalStorage.classList.add("hidden");
+  localStorage.clear();
+  localStorageCheck();
+  displayBooks(myLibrary);
+})
+
+$showReadBtn.addEventListener("click", (e) => {
+  resetLibraryDisplay();
+  displayBooks(myLibrary.filter(book => book.wasRead));
+})
+
+$showUnreadBtn.addEventListener("click", (e) => {
+  resetLibraryDisplay();
+  displayBooks(myLibrary.filter(book => !book.wasRead));
+})
+
+$showAllBtn.addEventListener("click", (e) => {
+  resetLibraryDisplay();
+  displayBooks(myLibrary);
 })
