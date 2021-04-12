@@ -1,0 +1,151 @@
+.hidden {
+  display: none;
+}
+display-inline{
+  display: inline;
+}
+
+.headerContainer{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 76px;
+  margin-right: 76px;
+  margin-top: 64.5px;
+}
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 51px;
+  line-height: 62px;
+  letter-spacing: -0.42px;
+  color: #000;
+}
+.logIn{
+  font-family: 'Pontano Sans', sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 33px;
+  width: 123px;
+  height: 62px;
+  border: 2px solid #000;
+  background-color: transparent;
+}
+.container {
+  margin: 20px auto;
+  width: 1280px;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+}
+  
+.bookCard {
+  width: 293px;
+  height: 366px;
+  margin: 10px 76px;
+  background-color: #F5F4F3;
+  position: relative;
+}
+.bookTitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 27px;
+  line-height: 40px;
+  margin-top: 38px; 
+  margin-left: 30px;
+}
+
+.bookAuthor {
+  font-family: 'Pontano Sans', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 40px;
+  margin-top: 25px;
+  margin-left: 30px;
+}
+
+.bookRead {
+  position: absolute;
+  width: 104px;
+  height: 40px;
+  right: 25px;
+  bottom: 11px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 40px;
+}
+.bookRead .tick {
+  display: inline-block;
+  width: 23px;
+  height: 19.03px;
+  margin-right: 12px;
+}
+
+.bookEditBtn {
+  position:absolute;
+  bottom: 0;
+}
+.addBookBtn {
+  position: sticky;
+  top: 400px;
+  left: 100%;
+  z-index: 1;
+  background-color: #000;
+  width: 297px;
+  height: 76px;
+  color: #FFF;
+  font-family: 'Pontano Sans', sans-serif;
+  font-size: 34px;
+  line-height: 44px;
+  padding-top: 19.01px;
+  transform: rotate(-90deg) translateY(111px);
+  transition: transform 0.2s ease;
+}
+
+ .addBookBtn img {
+  margin-right: 27.09px;
+  margin-left: 36.04px;
+  height: 30.96px;
+  width: 27.27px;
+ }
+
+ .addBookBtn::before {
+   content: "";
+   position: absolute;
+   top:0;
+  left: 0;
+  right: 0;
+  bottom:0;
+ }
+
+ .addBookBtn:hover{
+   transform:  rotate(-90deg) translateY(111px) scale(1.1);
+ }
+.filters {
+  margin-left: 76px;
+  margin-top: 24.5px;
+}
+
+.filters > * {
+  display: inline;
+}
+
+ .filters input[type="radio"] {
+  appearance: none;
+ }
+
+.filters label{
+  margin-right: 42px;
+  height: 45px;
+  width: 35px;
+  font-family: 'Pontano Sans', sans-serif;
+  font-size: 35px;
+  letter-spacing: -0.29px;
+  line-height: 45px;
+  color: #A9A4A1;
+}
+
+ .filters input[type="radio"]:checked ~ label{
+  color: #000;
+  text-decoration: underline;
+ }
