@@ -37,8 +37,7 @@ class Book {
 
 async function storageCheck() {
   if (userId) {
-    readUserData()
-    console.log(myLibrary)
+    await readUserData()
     return
   }
   if (!localStorage.getItem('bookLibrary')) {
@@ -62,19 +61,21 @@ function saveUserData() {
 }
 
 function readUserData() {
-  firebase.database().ref().child("users").child(userId).get().then(function (snapshot) {
-    if (snapshot.exists() && snapshot.val()) {
-      myLibrary = snapshot.val();
-      console.log(myLibrary)
-    } else {
-      myLibrary = [];
-      addDefaultBooks(myLibrary);
-      saveUserData();
-      readUserData();
-    }
-  }).catch(function (error) {
-    console.error(error);
-  });
+  return new Promise(function (resolve, reject) {
+    firebase.database().ref().child("users").child(userId).get().then(function (snapshot) {
+      if (snapshot.exists() && snapshot.val()) {
+        myLibrary = snapshot.val();
+      } else {
+        myLibrary = [];
+        addDefaultBooks(myLibrary);
+        saveUserData();
+        readUserData();
+      }
+      return resolve();
+    }).catch(function (error) {
+      console.error(error);
+    });
+  })
 };
 
 function addDefaultBooks(myLibrary) {
