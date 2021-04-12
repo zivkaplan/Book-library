@@ -15,10 +15,11 @@ const $clearLocalDeleteBtn = $clearLocalStorage.querySelector(".clearLocalStorag
 
 let myLibrary = [];
 let userId = null;
+let counter = 0
 
 class Book {
   constructor(title, author, pages = 0, wasRead = false) {
-    this.id = Date.now();
+    this.id = counter++;
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -34,9 +35,10 @@ class Book {
   }
 }
 
-function StorageCheck() {
+async function storageCheck() {
   if (userId) {
-    readUserData();
+    readUserData()
+    console.log(myLibrary)
     return
   }
   if (!localStorage.getItem('bookLibrary')) {
@@ -47,6 +49,10 @@ function StorageCheck() {
   myLibrary = JSON.parse(localStorage.getItem('bookLibrary'));
 }
 
+function populateStorage() {
+  localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
+}
+
 function saveUserData() {
   if (userId) {
     firebase.database().ref('users/' + userId).set(myLibrary);
@@ -55,9 +61,21 @@ function saveUserData() {
   populateStorage();
 }
 
-function populateStorage(m) {
-  localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
-}
+function readUserData() {
+  firebase.database().ref().child("users").child(userId).get().then(function (snapshot) {
+    if (snapshot.exists() && snapshot.val()) {
+      myLibrary = snapshot.val();
+      console.log(myLibrary)
+    } else {
+      myLibrary = [];
+      addDefaultBooks(myLibrary);
+      saveUserData();
+      readUserData();
+    }
+  }).catch(function (error) {
+    console.error(error);
+  });
+};
 
 function addDefaultBooks(myLibrary) {
   const harryPotter = new Book("Harry Potter", "J. K. Rolling", 587, true);
@@ -143,8 +161,6 @@ function resetLibraryDisplay() {
   }
 }
 //main
-StorageCheck();
-displayBooks(myLibrary)
 
 $newFormBtn.addEventListener("click", (e) => {
   $form.classList.remove("hidden");
@@ -191,7 +207,7 @@ $clearLocalDeleteBtn.addEventListener("click", (e) => {
   $clearLocalStorage.classList.add("hidden");
   resetLibraryDisplay();
   window.localStorage.clear();
-  StorageCheck();
+  storageCheck();
   displayBooks(myLibrary);
 })
 
@@ -240,18 +256,26 @@ function googleLogin() {
       var email = error.email;
       // The firebase.auth.AuthCredential type that was used.
       var credential = error.credential;
+      console.log(error)
       // ...
     });
 }
 
-firebase.auth().onAuthStateChanged(function (user) {
+firebase.auth().onAuthStateChanged(async function (user) {
   if (user) {
-    userId = firebase.auth().currentUser.uid;
-    readUserData();
-    var displayName = $signInBtn.innerText = user.displayName;
+    userId = firebase.auth().currentUser.uid
+    $signInBtn.innerText = user.displayName;
     $clearLocalStorageBtn.classList.add('hidden')
     $signOutBtn.classList.remove('hidden')
+    await storageCheck();
+    console.log(myLibrary)
+    resetLibraryDisplay();
+    displayBooks(myLibrary);
   } else {
+    userId = null;
+    storageCheck();
+    resetLibraryDisplay();
+    displayBooks(myLibrary)
     $signInBtn.innerText = "Sign in";
     $signOutBtn.classList.add('hidden')
 
@@ -259,11 +283,3 @@ firebase.auth().onAuthStateChanged(function (user) {
 }, function (error) {
   console.log(error);
 });
-
-
-function readUserData() { //Reads myLibrary array from firebase
-  dbrefObject = firebase.database().ref('/' + userId + "/Books");
-  dbrefObject.once("value", function (snap) {
-    console.log(snap);
-  })
-};
