@@ -36,12 +36,13 @@ h1 {
   width: 1280px;
   display: grid;
   grid-template-columns: repeat(3, auto);
+  justify-content: center;
 }
   
 .bookCard {
   width: 293px;
   height: 366px;
-  margin: 10px 76px;
+  margin: 10px 38px;
   background-color: #F5F4F3;
   position: relative;
 }
@@ -74,6 +75,7 @@ h1 {
   font-size: 24px;
   line-height: 40px;
 }
+
 .bookRead .tick {
   display: inline-block;
   width: 23px;
@@ -85,21 +87,30 @@ h1 {
   position:absolute;
   bottom: 0;
 }
-.addBookBtn {
-  position: sticky;
-  top: 400px;
-  left: 100%;
+.addBookBtnOuter{
+  position: fixed;
+  bottom: 550px;
+  right: 186px;
   z-index: 1;
-  background-color: #000;
+}
+
+.addBookBtn {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
   width: 297px;
   height: 76px;
+  background-color: #000;
   color: #FFF;
   font-family: 'Pontano Sans', sans-serif;
   font-size: 34px;
   line-height: 44px;
   padding-top: 19.01px;
-  transform: rotate(-90deg) translateY(111px);
-  transition: transform 0.2s ease;
+  transform: rotate(-90deg);
+  transition: transform 250ms ease-in-out;
 }
 
  .addBookBtn img {
@@ -109,18 +120,41 @@ h1 {
   width: 27.27px;
  }
 
- .addBookBtn::before {
-   content: "";
-   position: absolute;
-   top:0;
+ #addBook {
+  display: none;
+}
+
+.addBookBtn label::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top:0;
   left: 0;
   right: 0;
   bottom:0;
  }
 
  .addBookBtn:hover{
-   transform:  rotate(-90deg) translateY(111px) scale(1.1);
+   transform: rotate(-90deg) scale(1.1);
  }
+
+ #addBook:checked+.addBookBtn{
+  background-color: transparent;
+  transform:  rotate(-90deg) translateY(-631px);
+ }
+
+ #addBook:checked+.addBookBtn label::after{
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top:-1000px;
+  left: -1000px;
+  right: -1000px;
+  bottom:0;
+  background: transparent; 
+  
+ }
+
 .filters {
   margin-left: 76px;
   margin-top: 24.5px;
@@ -145,7 +179,110 @@ h1 {
   color: #A9A4A1;
 }
 
- .filters input[type="radio"]:checked ~ label{
+.filters input[type="radio"]:checked ~ label{
   color: #000;
   text-decoration: underline;
  }
+
+.form .overlay{
+  position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom:0;
+ background-color: rgba(0,0,0,0.7);
+ }
+
+.form .content {
+  position: fixed;
+  top:0;
+  right: 0;
+  height: 100vh;
+  width: 631px;
+  background-color: #FFF;
+  transition: transform 250ms ease-out;
+  animation: grow 300ms alternate;
+}
+@keyframes grow {
+  from { transform: translateX(280px) scale(0.1);}
+  to {transform: none;}
+}
+
+.form .closeBtn {
+   position: absolute;
+  top: 38px;
+  right: 30px;
+  width: 35px;
+  height: 35px;
+}
+
+.form .closeBtn:hover{
+  animation: wiggle 300ms;
+ }
+
+ @keyframes wiggle {
+  0%   { transform: rotate(0deg);}
+  33%   { transform: rotate(-10deg);}
+  66%   { transform: rotate(10deg);}
+  100%  { transform: rotate(0deg);}
+}
+ 
+ .form input[type="text"]:nth-last-of-type(1){
+   margin-top: 154px;
+ }
+
+ .form input[type="text"]{
+  color: #A9A4A1;
+  font-family: 'Pontano Sans', sans-serif;
+  font-size: 30px;
+  line-height: 38px;
+  margin-left: 54px;
+  width: 81.8%;
+  border: none;
+  border-bottom: 2px solid #000;
+}
+.form input[type="checkbox"] {
+  appearance: none; 
+}
+
+.form label[for="wasRead"] {
+  display: block;
+  position: relative;
+  margin: 0;
+  margin-top: 85px;
+  margin-left: 118px;
+  height: 37.98px;
+  width: 65px;
+  color: #000;
+  font-family: 'Pontano Sans', sans-serif;
+  font-size: 30px;
+  line-height: 38px;
+}
+.form label[for="wasRead"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60px;
+  height: 40px;
+  width: 40px;
+  border: solid 2px #000;
+}
+
+.form input[type="checkbox"]:checked+label[for="wasRead"]::before{
+  background-image:  url("images/tick.png");
+  background-clip: border-box;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.form button {
+  position: absolute;
+  height: 76px;
+  width: 516px;
+  left: 57.5px;
+  bottom: 45px;
+  color: #FFF;
+  font-family: 'Pontano Sans', sans-serif;
+  font-size: 34px;
+  line-height: 44px;
+  background-color: #000;
+}

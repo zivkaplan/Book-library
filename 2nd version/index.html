@@ -34,17 +34,36 @@
             </div>
         </div>
         <section class="library">
-            <div class="addBookBtn"><img class="display-inline" src="images/plus.png" alt="plus sign for adding a book">
-                Add
-                a book
+            <div class="addBookBtnOuter">
+                <input type="checkbox" id="addBook" autocomplete="off" />
+                <div class="addBookBtn">
+                    <label for="addBook"> <img class="display-inline" src="images/plus.png"
+                            alt="plus sign for adding a book">Add a book</label>
+                </div>
             </div>
             <div class="container"></div>
+        </section>
+
+        <div class="form hidden shrink">
+            <div class="overlay"> </div>
+            <div class="content">
+                <img class="closeBtn" src="images/X.png" alt="X sign">
+                <div>
+                    <input type="text" name="title" placeholder="Title" required />
+                </div>
+                <div>
+                    <input type="text" name="author" placeholder="Author" required />
+                </div>
+                <div class="wasReadDiv">
+                    <input type="checkbox" name="wasRead" id="wasRead" autocomplete="off" />
+                    <label for="wasRead">Read</label>
+                </div>
+                <button class="addBtn" type="submit">Add to my list</button>
+            </div>
 
 
-
-
-    </div>
-    <script src="app.js"></script>
+        </div>
+        <script src="app.js"></script>
 </body>
 
 </html>

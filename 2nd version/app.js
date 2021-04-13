@@ -1,4 +1,17 @@
 const $container = document.querySelector(".container");
+const $form = document.querySelector(".form");
+const $openFormBtn = document.querySelector(".addBookBtn label");
+const $closeBtn = $form.querySelector(".form .closeBtn");
+// const $addBtn = $form.querySelector(".form .addBtn");
+// const $clearLocalStorageBtn = document.querySelector(".clearLocalStorageBtn");
+// const $signInBtn = document.querySelector(".signInBtn");
+// const $signOutBtn = document.querySelector(".signOutBtn");
+// const $showAllBtn = document.querySelector(".showAllBtn");
+// const $showReadBtn = document.querySelector(".showReadBtn");
+// const $showUnreadBtn = document.querySelector(".showUnreadBtn");
+// const $clearLocalStorage = document.querySelector(".clearLocalStorage");
+// const $clearLocalCancelBtn = $clearLocalStorage.querySelector(".clearLocalStorage .cancel");
+// const $clearLocalDeleteBtn = $clearLocalStorage.querySelector(".clearLocalStorage .delete");
 
 
 let myLibrary = [];
@@ -108,3 +121,25 @@ function resetLibraryDisplay() {
 //main
 addDefaultBooks(myLibrary)
 displayBooks(myLibrary)
+
+$openFormBtn.addEventListener("click", (e) => {
+  $form.querySelector('input[name="title"]').value = "";
+  $form.querySelector('input[name="author"]').value = "";
+  $form.querySelector('input[type="checkbox"]').checked = false;
+  $form.classList.toggle("hidden");
+})
+
+$closeBtn.addEventListener("click", (e) => {
+  document.querySelector("#addBook").checked = false;
+  $form.classList.add("hidden");
+})
+
+$container.addEventListener("click", (e) => {
+  if (!e.target.closest("img.bookEditBtn")) return;
+  const bookCard = e.target.parentElement;
+  $form.querySelector('input[name="title"]').value = bookCard.querySelector(".bookTitle").innerText;
+  $form.querySelector('input[name="author"]').value = bookCard.querySelector(".bookAuthor").innerText;
+  if (bookCard.querySelector(".bookRead").innerText) { $form.querySelector('input[type="checkbox"]').checked = true };
+  document.querySelector("#addBook").checked = true; //actibating the "+Add a book" buttom so it will move
+  $form.classList.toggle("hidden");
+})
