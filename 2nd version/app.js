@@ -1,5 +1,7 @@
 const $container = document.querySelector(".container");
 const $form = document.querySelector(".form");
+// const $formOverlay = $form.querySelector(".form .overlay");
+const $formContent = $form.querySelector(".form .content");
 const $openFormBtn = document.querySelector(".addBookBtn label");
 const $closeBtn = $form.querySelector(".form .closeBtn");
 // const $addBtn = $form.querySelector(".form .addBtn");
@@ -126,12 +128,16 @@ $openFormBtn.addEventListener("click", (e) => {
   $form.querySelector('input[name="title"]').value = "";
   $form.querySelector('input[name="author"]').value = "";
   $form.querySelector('input[type="checkbox"]').checked = false;
-  $form.classList.toggle("hidden");
+  // $formOverlay.classList.toggle("hidden");
+  $formContent.classList.toggle("active");
+  $formContent.classList.toggle("slideOut");
 })
 
 $closeBtn.addEventListener("click", (e) => {
   document.querySelector("#addBook").checked = false;
-  $form.classList.add("hidden");
+  // $formOverlay.classList.add("hidden");
+  $formContent.classList.remove("active");
+  $formContent.classList.add("slideOut");
 })
 
 $container.addEventListener("click", (e) => {
@@ -141,5 +147,7 @@ $container.addEventListener("click", (e) => {
   $form.querySelector('input[name="author"]').value = bookCard.querySelector(".bookAuthor").innerText;
   if (bookCard.querySelector(".bookRead").innerText) { $form.querySelector('input[type="checkbox"]').checked = true };
   document.querySelector("#addBook").checked = true; //actibating the "+Add a book" buttom so it will move
-  $form.classList.toggle("hidden");
+  // $formOverlay.classList.toggle("hidden");
+  $formContent.classList.toggle("active");
+  $formContent.classList.toggle("slideOut");
 })

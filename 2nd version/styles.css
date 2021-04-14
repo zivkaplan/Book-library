@@ -1,26 +1,32 @@
 .hidden {
   display: none;
 }
+
 display-inline{
   display: inline;
 }
+.outerContainer1280{
+  width: 1280px;
+  margin: 0 auto;
+}
 
 .headerContainer{
-  display: flex;
-  justify-content: space-between;
-  margin-left: 76px;
   margin-right: 76px;
   margin-top: 64.5px;
+  position: relative;
 }
 
 h1 {
+  display: inline-block;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 51px;
   line-height: 62px;
   letter-spacing: -0.42px;
   color: #000;
+  margin-left: 76px;
 }
+
 .logIn{
   font-family: 'Pontano Sans', sans-serif;
   font-weight: 400;
@@ -30,29 +36,34 @@ h1 {
   height: 62px;
   border: 2px solid #000;
   background-color: transparent;
+  position: absolute;
+  right: 76px;
 }
+
 .container {
-  margin: 20px auto;
+  margin-top: 60px;
+  margin-left: 76px;
   width: 1280px;
   display: grid;
   grid-template-columns: repeat(3, auto);
-  justify-content: center;
+  justify-content: start;
 }
   
 .bookCard {
   width: 293px;
   height: 366px;
-  margin: 10px 38px;
+  margin-right: 76px;
+  margin-bottom: 76px;
   background-color: #F5F4F3;
   position: relative;
+  padding: 38px 30px ;
+
 }
 .bookTitle {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   font-size: 27px;
   line-height: 40px;
-  margin-top: 38px; 
-  margin-left: 30px;
 }
 
 .bookAuthor {
@@ -61,7 +72,6 @@ h1 {
   font-size: 24px;
   line-height: 40px;
   margin-top: 25px;
-  margin-left: 30px;
 }
 
 .bookRead {
@@ -86,7 +96,10 @@ h1 {
 .bookEditBtn {
   position:absolute;
   bottom: 0;
+  left: 0;
+  cursor: pointer;
 }
+
 .addBookBtnOuter{
   position: fixed;
   bottom: 550px;
@@ -103,14 +116,14 @@ h1 {
   bottom: 0;
   width: 297px;
   height: 76px;
-  background-color: #000;
   color: #FFF;
   font-family: 'Pontano Sans', sans-serif;
   font-size: 34px;
   line-height: 44px;
   padding-top: 19.01px;
   transform: rotate(-90deg);
-  transition: transform 250ms ease-in-out;
+  transition: transform 500ms ease-in-out, 
+  background-color 400ms ease-out;
 }
 
  .addBookBtn img {
@@ -131,27 +144,28 @@ h1 {
   top:0;
   left: 0;
   right: 0;
-  bottom:0;
- }
+  bottom: 0;
+  background-color: black;
+  transition: background-color 500ms,
+    top  500ms ease-out ,
+    left  500ms ease-out,
+    right  500ms ease-out;
+}
 
- .addBookBtn:hover{
-   transform: rotate(-90deg) scale(1.1);
- }
 
- #addBook:checked+.addBookBtn{
+#addBook:checked+.addBookBtn{
   background-color: transparent;
   transform:  rotate(-90deg) translateY(-631px);
  }
 
- #addBook:checked+.addBookBtn label::after{
+ #addBook:checked+.addBookBtn label::before{
   content: "";
   position: absolute;
   z-index: -1;
-  top:-1000px;
-  left: -1000px;
-  right: -1000px;
-  bottom:0;
-  background: transparent; 
+  top: -100vw;
+  left: -100vh;
+  right: -100vh;
+  background: rgba(0,0,0,0.7); 
   
  }
 
@@ -183,33 +197,59 @@ h1 {
   color: #000;
   text-decoration: underline;
  }
-
+ 
 .form .overlay{
   position: fixed;
   top:0;
   left: 0;
   right: 0;
   bottom:0;
- background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0,0,0,0.7);
+  user-select: none;
  }
 
+/* 
 .form .content {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: -100%;
+} */
+
+.form .content.slideOut {
   position: fixed;
   top:0;
   right: 0;
   height: 100vh;
   width: 631px;
   background-color: #FFF;
-  transition: transform 250ms ease-out;
-  animation: grow 300ms alternate;
-}
-@keyframes grow {
-  from { transform: translateX(280px) scale(0.1);}
-  to {transform: none;}
+  animation: slideOut 500ms ease-out forwards;
 }
 
+@keyframes slideOut {
+  0% { right: 0;}
+  100% {right: -631px;}
+}
+
+.form .content.active {
+  display: block;
+  position: fixed;
+  top:0;
+  right: 0;
+  height: 100vh;
+  width: 631px;
+  background-color: #FFF;
+  animation: slide 500ms ease-out forwards;
+}
+
+@keyframes slide {
+  from {right:-631px;}
+  to {right: 0;}
+}
+
+
 .form .closeBtn {
-   position: absolute;
+  position: absolute;
   top: 38px;
   right: 30px;
   width: 35px;
