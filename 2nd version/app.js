@@ -4,16 +4,11 @@ const $formContent = $form.querySelector(".form .content");
 const $openFormBtn = document.querySelector(".addBookBtn label");
 const $closeBtn = $form.querySelector(".form .closeBtn");
 const $addBtn = $form.querySelector(".form .addBtn");
-// const $clearLocalStorageBtn = document.querySelector(".clearLocalStorageBtn");
-// const $signInBtn = document.querySelector(".signInBtn");
-// const $signOutBtn = document.querySelector(".signOutBtn");
-// const $showAllBtn = document.querySelector(".showAllBtn");
-// const $showReadBtn = document.querySelector(".showReadBtn");
-// const $showUnreadBtn = document.querySelector(".showUnreadBtn");
-// const $clearLocalStorage = document.querySelector(".clearLocalStorage");
-// const $clearLocalCancelBtn = $clearLocalStorage.querySelector(".clearLocalStorage .cancel");
-// const $clearLocalDeleteBtn = $clearLocalStorage.querySelector(".clearLocalStorage .delete");
-
+const $saveBtn = $form.querySelector(".form .saveBtn");
+const $deleteBtn = $form.querySelector(".form .deleteBtn");
+const $showAllBtn = document.querySelector("#showAll");
+const $showReadBtn = document.querySelector("#showRead");
+const $showUnreadBtn = document.querySelector("#showUnread");
 
 let myLibrary = [];
 let counter = 0
@@ -129,12 +124,16 @@ $openFormBtn.addEventListener("click", (e) => {
   $form.querySelector('input[type="checkbox"]').checked = false;
   $formContent.classList.toggle("active");
   $formContent.classList.toggle("slideOut");
+  $addBtn.classList.remove("hidden");
+  $saveBtn.classList.add("hidden")
+  $deleteBtn.classList.add("hidden")
 })
 
 $closeBtn.addEventListener("click", (e) => {
   document.querySelector("#addBook").checked = false;
   $formContent.classList.remove("active");
   $formContent.classList.add("slideOut");
+
 })
 
 $container.addEventListener("click", (e) => {
@@ -146,6 +145,9 @@ $container.addEventListener("click", (e) => {
   document.querySelector("#addBook").checked = true; //activating the "+ Add a book" buttom so it will move
   $formContent.classList.toggle("active");
   $formContent.classList.toggle("slideOut");
+  $addBtn.classList.add("hidden");
+  $saveBtn.classList.remove("hidden")
+  $deleteBtn.classList.remove("hidden")
 })
 
 $addBtn.addEventListener("click", (e) => {
@@ -161,4 +163,19 @@ $addBtn.addEventListener("click", (e) => {
     $formContent.classList.add("slideOut");
   }
 
+})
+
+$showReadBtn.addEventListener("click", (e) => {
+  resetLibraryDisplay();
+  displayBooks(myLibrary.filter(book => book.wasRead));
+})
+
+$showUnreadBtn.addEventListener("click", (e) => {
+  resetLibraryDisplay();
+  displayBooks(myLibrary.filter(book => !book.wasRead));
+})
+
+$showAllBtn.addEventListener("click", (e) => {
+  resetLibraryDisplay();
+  displayBooks(myLibrary);
 })
