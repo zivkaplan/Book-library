@@ -11,3 +11,7 @@ html {
   height: 100%;
   width: 100%;
 }
+
+input:required {
+  box-shadow:none;
+}

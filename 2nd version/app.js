@@ -10,6 +10,7 @@ const $showAllBtn = document.querySelector("#showAll");
 const $showReadBtn = document.querySelector("#showRead");
 const $showUnreadBtn = document.querySelector("#showUnread");
 
+
 let myLibrary = [];
 let counter = 0
 
@@ -93,7 +94,7 @@ function createBookCard(book) {
   // create div for book's was read
   const wasReadDiv = document.createElement("div");
   wasReadDiv.innerHTML = `${book.wasRead ? 'Read <img class="tick display-inline" src="images/tick.png">' : ''}`;
-  wasReadDiv.classList.add("bookRead");
+  wasReadDiv.classList.add("bookWasRead");
 
   // create edit button
   const editImg = document.createElement("img");
@@ -119,6 +120,8 @@ addDefaultBooks(myLibrary)
 displayBooks(myLibrary)
 
 $openFormBtn.addEventListener("click", (e) => {
+  $openFormBtn.innerHTML = `<img class="display-inline" src="images/plus.png"
+  alt="plus sign for adding a book">Add a book`;
   $form.querySelector('input[name="title"]').value = "";
   $form.querySelector('input[name="author"]').value = "";
   $form.querySelector('input[type="checkbox"]').checked = false;
@@ -130,27 +133,62 @@ $openFormBtn.addEventListener("click", (e) => {
 })
 
 $closeBtn.addEventListener("click", (e) => {
-  document.querySelector("#addBook").checked = false;
-  $formContent.classList.remove("active");
-  $formContent.classList.add("slideOut");
-
+  closeAddBook();
 })
 
 $container.addEventListener("click", (e) => {
   if (!e.target.closest("img.bookEditBtn")) return;
   const bookCard = e.target.parentElement;
+
+  $openFormBtn.innerHTML = `<img class="display-inline" src="images/pencil.png"
+  alt="plus sign for adding a book">Edit book`;
+
   $form.querySelector('input[name="title"]').value = bookCard.querySelector(".bookTitle").innerText;
   $form.querySelector('input[name="author"]').value = bookCard.querySelector(".bookAuthor").innerText;
-  if (bookCard.querySelector(".bookRead").innerText) { $form.querySelector('input[type="checkbox"]').checked = true };
+  if (bookCard.querySelector(".bookWasRead").innerText) {
+    $form.querySelector('input[type="checkbox"]').checked = true;
+  } else {
+    $form.querySelector('input[type="checkbox"]').checked = false;
+  }
+
   document.querySelector("#addBook").checked = true; //activating the "+ Add a book" buttom so it will move
   $formContent.classList.toggle("active");
   $formContent.classList.toggle("slideOut");
   $addBtn.classList.add("hidden");
-  $saveBtn.classList.remove("hidden")
-  $deleteBtn.classList.remove("hidden")
+  $saveBtn.classList.remove("hidden");
+  $form.dataset.id = bookCard.dataset.id;
+  $deleteBtn.classList.remove("hidden");
+})
+
+$saveBtn.addEventListener('click', (e) => {
+  const { id } = $form.dataset;
+  const bookCard = document.querySelector(`[data-id="${id}"]`)
+  const bookIndex = myLibrary.findIndex((book) => book.id === parseInt(id));
+  console.log(bookIndex)
+  const title = $form.querySelector('input[name="title"]').value;
+  const author = $form.querySelector('input[name="author"]').value;
+  const wasRead = $form.querySelector('input[type="checkbox"]').checked;
+
+  if (title === "" || author === "") return;
+
+  myLibrary[bookIndex].title = title;
+  myLibrary[bookIndex].author = author;
+  myLibrary[bookIndex].wasRead = wasRead;
+  bookCard.querySelector(".bookTitle").innerText = title;
+  bookCard.querySelector(".bookAuthor").innerText = author;
+  bookCard.querySelector(".bookWasRead").innerHTML = `${wasRead ? 'Read <img class="tick display-inline" src="images/tick.png">' : ''}`;
+  closeAddBook()
+})
+
+$deleteBtn.addEventListener('click', (e) => {
+  const { id } = $form.dataset;
+  myLibrary = myLibrary.filter(book => book.id !== parseInt(id));
+  document.querySelector(`[data-id="${id}"]`).remove();
+  closeAddBook();
 })
 
 $addBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   const title = $form.querySelector('input[name="title"]').value;
   const author = $form.querySelector('input[name="author"]').value;
   const wasRead = $form.querySelector('input[name="wasRead"]').checked;
@@ -179,3 +217,12 @@ $showAllBtn.addEventListener("click", (e) => {
   resetLibraryDisplay();
   displayBooks(myLibrary);
 })
+
+
+function closeAddBook() {
+  $openFormBtn.innerHTML = `<img class="display-inline" src="images/plus.png"
+  alt="plus sign for adding a book">Add a book`;
+  document.querySelector("#addBook").checked = false;
+  $formContent.classList.remove("active");
+  $formContent.classList.add("slideOut");
+}

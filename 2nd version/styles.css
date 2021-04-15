@@ -1,3 +1,14 @@
+:root{
+  --clr-100: #FFF ;
+  --clr-200: #F5F4F3 ;
+  --clr-800: #A9A4A1;
+  --clr-900: #000;
+
+  --ff-primary: 'Pontano Sans', sans-serif;
+  --ff-accent: 'Montserrat', sans-serif;
+}
+
+
 .hidden {
   display: none;
 }
@@ -18,23 +29,23 @@ display-inline{
 
 h1 {
   display: inline-block;
-  font-family: 'Montserrat', sans-serif;
+  font-family:var(--ff-accent);
   font-weight: 700;
   font-size: 51px;
   line-height: 62px;
   letter-spacing: -0.42px;
-  color: #000;
+  color: var(--clr-900);
   margin-left: 76px;
 }
 
 .logIn{
-  font-family: 'Pontano Sans', sans-serif;
+  font-family: var(--ff-primary);
   font-weight: 400;
   font-size: 26px;
   line-height: 33px;
   width: 123px;
   height: 62px;
-  border: 2px solid #000;
+  border: 2px solid var(--clr-900);
   background-color: transparent;
   position: absolute;
   right: 76px;
@@ -43,7 +54,7 @@ h1 {
 .container {
   margin-top: 60px;
   margin-left: 76px;
-  width: 1280px;
+  width: min(1280px, 100vw);
   display: grid;
   grid-template-columns: repeat(3, auto);
   justify-content: start;
@@ -54,33 +65,33 @@ h1 {
   height: 366px;
   margin-right: 76px;
   margin-bottom: 76px;
-  background-color: #F5F4F3;
+  background-color: var(--clr-200);
   position: relative;
   padding: 38px 30px ;
 
 }
 .bookTitle {
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--ff-accent);
   font-weight: 400;
   font-size: 27px;
   line-height: 40px;
 }
 
 .bookAuthor {
-  font-family: 'Pontano Sans', sans-serif;
+  font-family: var(--ff-primary);
   font-weight: 400;
   font-size: 24px;
   line-height: 40px;
   margin-top: 25px;
 }
 
-.bookRead {
+.bookWasRead {
   position: absolute;
   width: 104px;
   height: 40px;
   right: 25px;
   bottom: 11px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--ff-accent);
   font-weight: 400;
   font-size: 24px;
   line-height: 40px;
@@ -116,14 +127,14 @@ h1 {
   bottom: 0;
   width: 297px;
   height: 76px;
-  color: #FFF;
-  font-family: 'Pontano Sans', sans-serif;
+  color: var(--clr-100);
+  font-family: var(--ff-primary);
   font-size: 34px;
   line-height: 44px;
   padding-top: 19.01px;
   transform: rotate(-90deg);
-  transition: transform 500ms ease-in-out, 
-  background-color 400ms ease-out;
+  transition: transform 500ms, 
+  background-color 400ms;
 }
 
  .addBookBtn img {
@@ -145,20 +156,20 @@ h1 {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: black;
+  background-color: var(--clr-900);
   transition: background-color 500ms,
-    top  500ms ease-out ,
-    left  500ms ease-out,
-    right  500ms ease-out;
+    top  500ms ,
+    left  500ms,
+    right  500ms;
 }
 
 
-#addBook:checked+.addBookBtn{
+#addBook:checked+.addBookBtn {
   background-color: transparent;
   transform:  rotate(-90deg) translateY(-631px);
  }
 
- #addBook:checked+.addBookBtn label::before{
+ #addBook:checked+.addBookBtn label::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -166,7 +177,6 @@ h1 {
   left: -100vh;
   right: -100vh;
   background: rgba(0,0,0,0.7); 
-  
  }
 
 .filters {
@@ -186,15 +196,15 @@ h1 {
   margin-right: 42px;
   height: 45px;
   width: 35px;
-  font-family: 'Pontano Sans', sans-serif;
+  font-family:var(--ff-primary);
   font-size: 35px;
   letter-spacing: -0.29px;
   line-height: 45px;
-  color: #A9A4A1;
+  color: var(--clr-800);
 }
 
 .filters input[type="radio"]:checked ~ label{
-  color: #000;
+  color: var(--clr-900);
   text-decoration: underline;
  }
  
@@ -208,22 +218,14 @@ h1 {
   user-select: none;
  }
 
-/* 
-.form .content {
-  display: none;
-  position: absolute;
-  top: 0;
-  right: -100%;
-} */
-
 .form .content.slideOut {
   position: fixed;
   top:0;
   right: 0;
   height: 100vh;
   width: 631px;
-  background-color: #FFF;
-  animation: slideOut 500ms ease-out forwards;
+  background-color: var(--clr-100);
+  animation: slideOut 500ms forwards;
 }
 
 @keyframes slideOut {
@@ -238,8 +240,8 @@ h1 {
   right: 0;
   height: 100vh;
   width: 631px;
-  background-color: #FFF;
-  animation: slide 500ms ease-out forwards;
+  background-color: var(--clr-100);
+  animation: slide 500ms forwards;
 }
 
 @keyframes slide {
@@ -249,9 +251,8 @@ h1 {
 
 
 .form .closeBtn {
-  position: absolute;
-  top: 38px;
-  right: 30px;
+  margin-top: 38px;
+  margin-left: 566px;
   width: 35px;
   height: 35px;
 }
@@ -266,21 +267,41 @@ h1 {
   66%   { transform: rotate(10deg);}
   100%  { transform: rotate(0deg);}
 }
- 
- .form input[type="text"]:nth-last-of-type(1){
-   margin-top: 154px;
- }
 
- .form input[type="text"]{
-  color: #A9A4A1;
-  font-family: 'Pontano Sans', sans-serif;
+.form input[type="text"]{
+   margin-top: 84px;
+   font-family: var(--ff-primary);
+   font-size: 30px;
+   line-height: 38px;
+   margin-left: 54px;
+   width: 81.8%;
+   border: none;
+   border-bottom: 2px solid var(--clr-900);
+   outline: none;
+}
+
+  .inputDiv{
+    position: relative;
+  }
+
+.floating-label {
+  position: absolute;
+  color: var(--clr-800);
   font-size: 30px;
   line-height: 38px;
   margin-left: 54px;
-  width: 81.8%;
-  border: none;
-  border-bottom: 2px solid #000;
+  pointer-events: none;
+  left: 0px;
+  bottom: 0px;
+  transition: 0.2s ease all;
 }
+
+.form input[type="text"]:focus ~ .floating-label,
+.form input[type="text"]:not(:focus):valid ~ .floating-label{
+  bottom: 35px;
+  font-size: 14px;  
+}
+
 .form input[type="checkbox"] {
   appearance: none; 
 }
@@ -293,11 +314,12 @@ h1 {
   margin-left: 118px;
   height: 37.98px;
   width: 65px;
-  color: #000;
-  font-family: 'Pontano Sans', sans-serif;
+  color: var(--clr-900);
+  font-family: var(--ff-primary);
   font-size: 30px;
   line-height: 38px;
 }
+
 .form label[for="wasRead"]::before {
   content: "";
   position: absolute;
@@ -305,7 +327,7 @@ h1 {
   left: -60px;
   height: 40px;
   width: 40px;
-  border: solid 2px #000;
+  border: solid 2px var(--clr-900);
 }
 
 .form input[type="checkbox"]:checked+label[for="wasRead"]::before{
@@ -318,13 +340,14 @@ h1 {
   position: absolute;
   left: 57.5px;
   bottom: 45px;
-  color: #FFF;
-  font-family: 'Pontano Sans', sans-serif;
+  color: var(--clr-100);
+  font-family: var(--ff-primary);
   font-size: 34px;
   line-height: 44px;
-  background-color: #000;
+  background-color: var(--clr-900);
   height: 76px;
 }
+
 .form .addBtn {
   width: 516px;
 }
@@ -334,13 +357,13 @@ width: 412.8px;
 }
 
 .form .deleteBtn {
-  background-color: #000;
+  background-color: var(--clr-900);
   left: 516px;
   padding: 15px;
 }
 
 .form .deleteBtn svg{
-  fill: #FFF;
+  fill: var(--clr-100);
   width: 100%;
   height: 100%;
 }
