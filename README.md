@@ -1,6 +1,6 @@
 # Book-library
 
-Wellcome to your virtual library! 
+Welcome to your virtual library! 
 A website to manage your books.
 an exercise from ['The Odin Project'](https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/library).
 
@@ -19,4 +19,10 @@ an exercise from ['The Odin Project'](https://www.theodinproject.com/paths/full-
 - Google authentication 
 - Firebase realtime database
 
-View here: 
+### TODO:
+- build responsive design for non-desktop users
+
+View here: https://zivkaplan.github.io/Book-library/
+
+Screenshots: 
+
