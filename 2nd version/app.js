@@ -9,6 +9,9 @@ const $deleteBtn = $form.querySelector(".form .deleteBtn");
 const $showAllBtn = document.querySelector("#showAll");
 const $showReadBtn = document.querySelector("#showRead");
 const $showUnreadBtn = document.querySelector("#showUnread");
+const $logInBtn = document.querySelector(".logIn");
+const $loggedInBtn = document.querySelector(".loggedIn");
+const $logOutBtn = document.querySelector(".logOut");
 
 
 let myLibrary = [];
@@ -71,6 +74,50 @@ function deleteBook(id) {
   myLibrary.splice(bookToRemove, 1);
 }
 
+
+async function storageCheck() {
+  if (userId) {
+    await readUserData()
+    return
+  }
+  if (!localStorage.getItem('bookLibrary')) {
+    myLibrary = [];
+    addDefaultBooks(myLibrary);
+    populateStorage()
+  }
+  myLibrary = JSON.parse(localStorage.getItem('bookLibrary'));
+}
+
+function populateStorage() {
+  localStorage.setItem('bookLibrary', JSON.stringify(myLibrary));
+}
+
+function saveUserData() {
+  if (userId) {
+    firebase.database().ref('users/' + userId).set(myLibrary);
+    return
+  }
+  populateStorage();
+}
+
+function readUserData() {
+  return new Promise(function (resolve, reject) {
+    firebase.database().ref().child("users").child(userId).get().then(function (snapshot) {
+      if (snapshot.exists() && snapshot.val()) {
+        myLibrary = snapshot.val();
+      } else {
+        myLibrary = [];
+        addDefaultBooks(myLibrary);
+        saveUserData();
+        readUserData();
+      }
+      return resolve();
+    }).catch(function (error) {
+      console.error(error);
+    });
+  })
+};
+
 function createBookCard(book) {
   // create card for the book 
   const bookDiv = document.createElement("div");
@@ -116,9 +163,6 @@ function resetLibraryDisplay() {
   }
 }
 //main
-addDefaultBooks(myLibrary)
-displayBooks(myLibrary)
-
 $openFormBtn.addEventListener("click", (e) => {
   $openFormBtn.innerHTML = `<img class="display-inline" src="images/plus.png"
   alt="plus sign for adding a book">Add a book`;
@@ -141,7 +185,7 @@ $container.addEventListener("click", (e) => {
   const bookCard = e.target.parentElement;
 
   $openFormBtn.innerHTML = `<img class="display-inline" src="images/pencil.png"
-  alt="plus sign for adding a book">Edit book`;
+  alt="edit sign for editing book's details" style="transform: rotate(90deg)">Edit book`;
 
   $form.querySelector('input[name="title"]').value = bookCard.querySelector(".bookTitle").innerText;
   $form.querySelector('input[name="author"]').value = bookCard.querySelector(".bookAuthor").innerText;
@@ -177,7 +221,8 @@ $saveBtn.addEventListener('click', (e) => {
   bookCard.querySelector(".bookTitle").innerText = title;
   bookCard.querySelector(".bookAuthor").innerText = author;
   bookCard.querySelector(".bookWasRead").innerHTML = `${wasRead ? 'Read <img class="tick display-inline" src="images/tick.png">' : ''}`;
-  closeAddBook()
+  closeAddBook();
+  saveUserData();
 })
 
 $deleteBtn.addEventListener('click', (e) => {
@@ -185,6 +230,7 @@ $deleteBtn.addEventListener('click', (e) => {
   myLibrary = myLibrary.filter(book => book.id !== parseInt(id));
   document.querySelector(`[data-id="${id}"]`).remove();
   closeAddBook();
+  saveUserData();
 })
 
 $addBtn.addEventListener("click", (e) => {
@@ -196,6 +242,7 @@ $addBtn.addEventListener("click", (e) => {
   if (title !== "" && author !== "") {
     addBookToLibrary(newBook, myLibrary);
     createBookCard(newBook);
+    saveUserData();
     document.querySelector("#addBook").checked = false;
     $formContent.classList.remove("active");
     $formContent.classList.add("slideOut");
@@ -226,3 +273,61 @@ function closeAddBook() {
   $formContent.classList.remove("active");
   $formContent.classList.add("slideOut");
 }
+
+$logInBtn.addEventListener("click", () => {
+  googleLogin();
+})
+
+$logOutBtn.addEventListener("click", () => {
+  firebase.auth().signOut();
+  location.reload();
+})
+
+function googleLogin() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth()
+    .signInWithPopup(provider)
+    .then((result) => {
+      /** @type {firebase.auth.OAuthCredential} */
+      var credential = result.credential;
+
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      var token = credential.accessToken;
+      // The signed-in user info.
+      var user = result.user;
+      // ...
+    }).catch((error) => {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      console.log(error)
+      // ...
+    });
+}
+
+firebase.auth().onAuthStateChanged(async function (user) {
+  if (user) {
+    userId = firebase.auth().currentUser.uid;
+    $logInBtn.classList.add('hidden')
+    $loggedInBtn.classList.remove('hidden')
+    $loggedInBtn.querySelector("span.username").innerText = user.displayName.split(' ').slice(0, -1).join(' ');
+    await storageCheck();
+    resetLibraryDisplay();
+    displayBooks(myLibrary);
+  } else {
+    userId = null;
+    $logInBtn.classList.remove('hidden')
+    $loggedInBtn.classList.add('hidden')
+    storageCheck();
+    resetLibraryDisplay();
+    displayBooks(myLibrary)
+  }
+}, function (error) {
+  console.log(error);
+});
+
+

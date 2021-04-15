@@ -13,10 +13,8 @@
   display: none;
 }
 
-display-inline{
-  display: inline;
-}
-.outerContainer1280{
+
+.outerContainer1280 {
   width: 1280px;
   margin: 0 auto;
 }
@@ -51,10 +49,42 @@ h1 {
   right: 76px;
 }
 
+.logIn.loggedIn {
+  border: none;
+  font-size: 32px;
+}
+
+.loggedIn .usermenu {
+  margin-left: 10px;
+  height: 8.68px;
+  width: 15px;
+  margin-bottom: 5px;
+}
+
+
+.logOut{
+  position: absolute;
+  top: 100%;
+  right: 40px;
+  width: 100px;
+  font-size: 24px;
+  background-color: var(--clr-100);
+  border: 2px solid var(--clr-900);
+  padding: .2em .3em;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 200ms;
+}
+
+.loggedIn:hover ~ .logOut,
+.logOut:hover {
+transform: scaleY(1);
+}
+
 .container {
   margin-top: 60px;
   margin-left: 76px;
-  width: min(1280px, 100vw);
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, auto);
   justify-content: start;
