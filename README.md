@@ -1,6 +1,6 @@
 # Book-library
 
-an exercise from ['The Odin Project'] (https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/library). A website to manage your books!
+an exercise from ['The Odin Project'](https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/library). A website to manage your books!
 Featurs: 
 - add your books to the virtual library. 
 - edit them.
