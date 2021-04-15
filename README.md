@@ -26,3 +26,5 @@ View here: https://zivkaplan.github.io/Book-library/
 
 Screenshots: 
 
+<img width="1676" alt="Screen Shot 2021-04-16 at 0 33 37" src="https://user-images.githubusercontent.com/80772683/114941325-b1f08d80-9e4b-11eb-9800-dd2576a3a828.png">
+<img width="1676" alt="Screen Shot 2021-04-16 at 0 33 54" src="https://user-images.githubusercontent.com/80772683/114941339-b61cab00-9e4b-11eb-88ea-99cc091fa5d4.png">
