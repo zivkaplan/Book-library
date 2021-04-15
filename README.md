@@ -5,11 +5,12 @@ A website to manage your books.
 an exercise from ['The Odin Project'](https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/library).
 
 Features: 
-- add your books to the virtual library. 
-- edit them.
-- mark books you have read.
-- log in to your Google acount and save your data to access it everywhere.
-- non logged users will have their data saved automatically on the browser's local storage.
+- add your books to the virtual library
+- edit them
+- filters to view your read/unread/all books
+- mark books you have read
+- log in to your Google acount and save your data to access it everywhere
+- non logged users will have their data saved automatically on the browser's local storage
 
 
 Project contains: 
