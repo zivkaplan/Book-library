@@ -4,7 +4,7 @@ Wellcome to your virtual library!
 A website to manage your books.
 an exercise from ['The Odin Project'](https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/library).
 
-Features: 
+## Features: 
 - add your books to the virtual library
 - edit them
 - filters to view your read/unread/all books
@@ -13,7 +13,7 @@ Features:
 - non logged users will have their data saved automatically on the browser's local storage
 
 
-Project contains: 
+## Project contains: 
 - HTML, CSS, JS
 - using local storage
 - Google authentication 
