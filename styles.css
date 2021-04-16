@@ -6,70 +6,77 @@
 
   --ff-primary: 'Pontano Sans', sans-serif;
   --ff-accent: 'Montserrat', sans-serif;
+  font-size: 10px;
 }
 
+@media (max-width: 500px) {
+  :root {
+    font-size: 5px;
+  }
+}
 
 .hidden {
   display: none;
 }
 
 
-.outerContainer1280 {
-  width: 1280px;
+.outerContainer {
+  /* max-width: 1500px; */
   margin: 0 auto;
 }
 
 .headerContainer{
-  margin-right: 76px;
+  margin-right: 7.6rem;
   margin-top: 64.5px;
   position: relative;
+  display: flex;
 }
 
 h1 {
+  flex-grow: 3;
   display: inline-block;
   font-family:var(--ff-accent);
   font-weight: 700;
-  font-size: 51px;
-  line-height: 62px;
-  letter-spacing: -0.42px;
+  font-size: 5.1rem;
+  line-height: 6.2rem;
+  letter-spacing: -0.042rem;
   color: var(--clr-900);
-  margin-left: 76px;
+  margin-left: 7.6rem;
 }
 
 .logIn{
+  flex-shrink: 0;
   font-family: var(--ff-primary);
   font-weight: 400;
-  font-size: 26px;
-  line-height: 33px;
-  width: 123px;
-  height: 62px;
-  border: 2px solid var(--clr-900);
+  font-size: 2.6rem;
+  line-height: 3.3rem;
+  width: 12.3rem;
+  height: 6.2rem;
+  border: .2rem solid var(--clr-900);
   background-color: transparent;
-  position: absolute;
-  right: 76px;
 }
 
 .logIn.loggedIn {
   border: none;
-  font-size: 32px;
+  font-size: 3.2rem;
 }
 
 .loggedIn .usermenu {
-  margin-left: 10px;
-  height: 8.68px;
-  width: 15px;
-  margin-bottom: 5px;
+  margin-left: 1rem;
+  height: .868rem;
+  width: 1.5rem;
+  margin-bottom: .5rem;
 }
 
 
 .logOut{
   position: absolute;
   top: 100%;
-  right: 40px;
-  width: 100px;
-  font-size: 24px;
+  right: 4rem;
+  width: 10rem;
+  font-size: 2.4rem;
   background-color: var(--clr-100);
-  border: 2px solid var(--clr-900);
+  border: .2rem solid var(--clr-900);
   padding: .2em .3em;
   transform: scaleY(0);
   transform-origin: top;
@@ -82,56 +89,57 @@ transform: scaleY(1);
 }
 
 .container {
-  margin-top: 60px;
-  margin-left: 76px;
+  margin-top: 6rem;
+  margin-left: 7.6rem;
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  justify-content: start;
+  display: flex;
+  flex-wrap: wrap;
 }
-  
+
+ 
 .bookCard {
-  width: 293px;
-  height: 366px;
-  margin-right: 76px;
-  margin-bottom: 76px;
+  flex-grow: 0;
+  flex-basis: 29.3rem;
+  height: 36.6rem;
+  margin-right: 7.6rem;
+  margin-bottom: 7.6rem;
   background-color: var(--clr-200);
   position: relative;
-  padding: 38px 30px ;
+  padding: 3.8rem 3rem;
 
 }
 .bookTitle {
   font-family: var(--ff-accent);
   font-weight: 400;
-  font-size: 27px;
-  line-height: 40px;
+  font-size: 2.7rem;
+  line-height: 4rem;
 }
 
 .bookAuthor {
   font-family: var(--ff-primary);
   font-weight: 400;
-  font-size: 24px;
-  line-height: 40px;
-  margin-top: 25px;
+  font-size: 2.4rem;
+  line-height: 4rem;
+  margin-top: 2.5rem;
 }
 
 .bookWasRead {
   position: absolute;
-  width: 104px;
-  height: 40px;
-  right: 25px;
-  bottom: 11px;
+  width: 10.4rem;
+  height: 4rem;
+  right: 2.5rem;
+  bottom: 1.1rem;
   font-family: var(--ff-accent);
   font-weight: 400;
-  font-size: 24px;
-  line-height: 40px;
+  font-size: 2.4rem;
+  line-height: 4rem;
 }
 
-.bookRead .tick {
+.bookWasRead .tick {
   display: inline-block;
-  width: 23px;
-  height: 19.03px;
-  margin-right: 12px;
+  width: 2.3rem;
+  height: 1.9rem;
+  margin-right: 1.2rem;
 }
 
 .bookEditBtn {
@@ -139,12 +147,14 @@ transform: scaleY(1);
   bottom: 0;
   left: 0;
   cursor: pointer;
+  width:5.8rem ;
+  height:5.8rem ;
 }
 
 .addBookBtnOuter{
   position: fixed;
-  bottom: 550px;
-  right: 186px;
+  top: 40vh;
+  right: 18.6rem;
   z-index: 1;
 }
 
@@ -155,23 +165,23 @@ transform: scaleY(1);
   right: 0;
   left: 0;
   bottom: 0;
-  width: 297px;
-  height: 76px;
+  width: 29.7rem;
+  height: 7.6rem;
   color: var(--clr-100);
   font-family: var(--ff-primary);
-  font-size: 34px;
-  line-height: 44px;
-  padding-top: 19.01px;
+  font-size: 3.4rem;
+  line-height: 4.4rem;
+  padding-top: 1.9rem;
   transform: rotate(-90deg);
   transition: transform 500ms, 
   background-color 400ms;
 }
 
  .addBookBtn img {
-  margin-right: 27.09px;
-  margin-left: 36.04px;
-  height: 30.96px;
-  width: 27.27px;
+  margin-right: 2.9rem;
+  margin-left: 3.6rem;
+  height: 3.1rem;
+  width: 2.727rem;
  }
 
  #addBook {
@@ -187,10 +197,9 @@ transform: scaleY(1);
   right: 0;
   bottom: 0;
   background-color: var(--clr-900);
+  transform-origin: bottom;
   transition: background-color 500ms,
-    top  500ms ,
-    left  500ms,
-    right  500ms;
+    transform 400ms ease-in-out;
 }
 
 
@@ -203,15 +212,14 @@ transform: scaleY(1);
   content: "";
   position: absolute;
   z-index: -1;
-  top: -100vw;
-  left: -100vh;
-  right: -100vh;
+  transform: scale(100, 100);
+  transform-origin: bottom;
   background: rgba(0,0,0,0.7); 
  }
 
 .filters {
-  margin-left: 76px;
-  margin-top: 24.5px;
+  margin-left: 7.6rem;
+  margin-top: 2.45rem;
 }
 
 .filters > * {
@@ -220,16 +228,17 @@ transform: scaleY(1);
 
  .filters input[type="radio"] {
   appearance: none;
+  -webkit-appearance: none;
  }
 
 .filters label{
-  margin-right: 42px;
-  height: 45px;
-  width: 35px;
+  margin-right: 4.2rem;
+  height: 4.5rem;
+  width: 3.5rem;
   font-family:var(--ff-primary);
-  font-size: 35px;
-  letter-spacing: -0.29px;
-  line-height: 45px;
+  font-size: 3.5rem;
+  letter-spacing: -.029rem;
+  line-height: 4.5rem;
   color: var(--clr-800);
 }
 
@@ -238,29 +247,19 @@ transform: scaleY(1);
   text-decoration: underline;
  }
  
-.form .overlay{
-  position: fixed;
-  top:0;
-  left: 0;
-  right: 0;
-  bottom:0;
-  background-color: rgba(0,0,0,0.7);
-  user-select: none;
- }
-
 .form .content.slideOut {
   position: fixed;
   top:0;
   right: 0;
   height: 100vh;
-  width: 631px;
+  width: 63.1rem;
   background-color: var(--clr-100);
   animation: slideOut 500ms forwards;
-}
+  }
 
 @keyframes slideOut {
-  0% { right: 0;}
-  100% {right: -631px;}
+  from {  transform: translateX(0px); }
+  to {  transform: translateX(631px);}
 }
 
 .form .content.active {
@@ -269,22 +268,23 @@ transform: scaleY(1);
   top:0;
   right: 0;
   height: 100vh;
-  width: 631px;
+  width: 63.1rem;
   background-color: var(--clr-100);
+  transform: translateX(-631px);
   animation: slide 500ms forwards;
 }
 
 @keyframes slide {
-  from {right:-631px;}
-  to {right: 0;}
+  from {  transform: translateX(631px);}
+  to {  transform: translateX(0px); }
 }
 
 
 .form .closeBtn {
-  margin-top: 38px;
-  margin-left: 566px;
-  width: 35px;
-  height: 35px;
+  margin-top: 3.8rem;
+  margin-left: 56.6rem;
+  width: 3.5rem;
+  height: 3.5rem;
 }
 
 .form .closeBtn:hover{
@@ -299,14 +299,14 @@ transform: scaleY(1);
 }
 
 .form input[type="text"]{
-   margin-top: 84px;
+   margin-top: 8.4rem;
    font-family: var(--ff-primary);
-   font-size: 30px;
-   line-height: 38px;
-   margin-left: 54px;
+   font-size: 3rem;
+   line-height: 3.8rem;
+   margin-left: 5.4rem;
    width: 81.8%;
    border: none;
-   border-bottom: 2px solid var(--clr-900);
+   border-bottom: .2rem solid var(--clr-900);
    outline: none;
 }
 
@@ -317,47 +317,48 @@ transform: scaleY(1);
 .floating-label {
   position: absolute;
   color: var(--clr-800);
-  font-size: 30px;
-  line-height: 38px;
-  margin-left: 54px;
+  font-size: 3rem;
+  line-height: 3.8rem;
+  margin-left: 5.4rem;
   pointer-events: none;
   left: 0px;
   bottom: 0px;
-  transition: 0.2s ease all;
+  transition: transform 200ms;
 }
 
 .form input[type="text"]:focus ~ .floating-label,
 .form input[type="text"]:not(:focus):valid ~ .floating-label{
-  bottom: 35px;
-  font-size: 14px;  
+transform: translateY(-35px) scale(0.4);
+transform-origin: left;
 }
 
 .form input[type="checkbox"] {
   appearance: none; 
+  -webkit-appearance: none;
 }
 
 .form label[for="wasRead"] {
   display: block;
   position: relative;
   margin: 0;
-  margin-top: 85px;
-  margin-left: 118px;
-  height: 37.98px;
-  width: 65px;
+  margin-top: 8.5rem;
+  margin-left: 11.8rem;
+  height: 3.798rem;
+  width: 6.5rem;
   color: var(--clr-900);
   font-family: var(--ff-primary);
-  font-size: 30px;
-  line-height: 38px;
+  font-size: 3rem;
+  line-height: 3.8rem;
 }
 
 .form label[for="wasRead"]::before {
   content: "";
   position: absolute;
   top: 0;
-  left: -60px;
-  height: 40px;
-  width: 40px;
-  border: solid 2px var(--clr-900);
+  left: -6rem;
+  height: 4rem;
+  width: 4rem;
+  border: .2rem solid var(--clr-900);
 }
 
 .form input[type="checkbox"]:checked+label[for="wasRead"]::before{
@@ -366,30 +367,31 @@ transform: scaleY(1);
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .form button {
   position: absolute;
-  left: 57.5px;
-  bottom: 45px;
+  left: 5.75rem;
+  bottom: 4.5rem;
   color: var(--clr-100);
   font-family: var(--ff-primary);
-  font-size: 34px;
-  line-height: 44px;
+  font-size: 3.4rem;
+  line-height: 4.4rem;
   background-color: var(--clr-900);
-  height: 76px;
+  height: 7.6rem;
 }
 
 .form .addBtn {
-  width: 516px;
+  width: 51.6rem;
 }
 
 .form .saveBtn {
-width: 412.8px;
+width: 41.28rem;
 }
 
 .form .deleteBtn {
   background-color: var(--clr-900);
-  left: 516px;
-  padding: 15px;
+  left: 51.6rem;
+  padding: 1.5rem;
 }
 
 .form .deleteBtn svg{

@@ -140,7 +140,7 @@ function createBookCard(book) {
 
   // create div for book's was read
   const wasReadDiv = document.createElement("div");
-  wasReadDiv.innerHTML = `${book.wasRead ? 'Read <img class="tick display-inline" src="images/tick.png">' : ''}`;
+  wasReadDiv.innerHTML = `${book.wasRead ? 'Read <img class="tick" src="images/tick.png">' : ''}`;
   wasReadDiv.classList.add("bookWasRead");
 
   // create edit button
