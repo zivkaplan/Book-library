@@ -146,12 +146,6 @@ transform: scaleY(1);
   height:5.8rem ;
 }
 
-.addBookBtnOuter{
-  /* top: 40vh;
-  left: 0;
-  z-index: 1; */
-}
-
 .addBookBtn {
   position: fixed;
   z-index: 2;
@@ -192,7 +186,7 @@ transform: scaleY(1);
   background-color: var(--clr-900);
   transform-origin: bottom;
   transition: background-color 500ms,
-    transform 400ms ease-in-out;
+    transform 400ms;
 }
 
 
@@ -397,7 +391,6 @@ width: 41.28rem;
   :root {
     font-size: 5px;
   }
-
 }
 
 @media (max-width: 350px) {
