@@ -147,19 +147,16 @@ transform: scaleY(1);
 }
 
 .addBookBtnOuter{
-  position: fixed;
-  top: 40vh;
-  right: 18.6rem;
-  z-index: 1;
+  /* top: 40vh;
+  left: 0;
+  z-index: 1; */
 }
 
 .addBookBtn {
-  position: absolute;
+  position: fixed;
   z-index: 2;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  top: 40vh;
+  right: calc(-29.7rem / 2);
   width: 29.7rem;
   height: 7.6rem;
   color: var(--clr-100);
@@ -168,6 +165,7 @@ transform: scaleY(1);
   line-height: 4.4rem;
   padding-top: 1.9rem;
   transform: rotate(-90deg);
+  transform-origin: bottom;
   transition: transform 500ms, 
   background-color 400ms;
 }
@@ -395,31 +393,15 @@ width: 41.28rem;
 }
 
 
-@media (max-width: 650px) {
+@media (max-width: 780px) {
   :root {
     font-size: 5px;
   }
+
 }
 
-@media (max-width: 380px) {
+@media (max-width: 350px) {
   :root {
     font-size: 3px;
   }
-  .headerContainer {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .headerContainer > *{
-    margin-bottom: 3rem;
-  }
-
-  .filters {
-    text-align: center;
-  }
-
-.container {
-  justify-content: center;
-}
 }
