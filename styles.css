@@ -214,8 +214,7 @@ transform: scaleY(1);
 }
 
 .filters input[type="radio"] {
-  appearance: none;
-  -webkit-appearance: none;
+  display: none;
  }
 
 .filters label{
@@ -319,8 +318,7 @@ transform-origin: left;
 }
 
 .form input[type="checkbox"] {
-  appearance: none; 
-  -webkit-appearance: none;
+  display: none;
 }
 
 .form label[for="wasRead"] {
